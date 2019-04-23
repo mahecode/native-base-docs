@@ -62,17 +62,34 @@ NativeBase use some custom fonts that can be loaded using **Font.loadAsync** fun
 *Syntax* <br />
 ```js
 // At the top of your file
-import { Font } from 'expo';
+import { Font, AppLoading } from 'expo';
+import { Root } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 
 // Later on in your component
-async componentDidMount() {
+constructor(){
+  this.state = {
+    loading: true,
+  }
+}
+async componentWillMount() {
   await Font.loadAsync({
     'Roboto': require('native-base/Fonts/Roboto.ttf'),
     'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     ...Ionicons.font,
   });
+  this.setState({loading:false})
 }
+
+//later in your render()
+if(this.state.loading){
+      return(
+        <Root>
+          <AppLoading />
+        </Root>
+     )
+ }
+  
 ```
 <br />
 Check out the [KitchenSink](https://expo.io/@geekyants/nativebasekitchensink) with Expo for an example of the implementation.<br />
